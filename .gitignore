@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/BridgeBurner/BridgeBurner/src/node_modules
+/BridgeBurner/BridgeBurner/wwwroot
+/BridgeBurner/BridgeBurner/bin
+/BridgeBurner/BridgeBurner/obj
+/BridgeBurner/.vs/BridgeBurner/v15
+/BridgeBurner/.vs/config
