@@ -1,19 +1,16 @@
 {
   "compilerOptions": {
-
     "removeComments": false,
-
     "target": "es2017",
     "module": "es2015",
     "moduleResolution": "node",
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true,
-    "outDir": "../wwwroot"
- 
+    "sourceMap": true
   },
-  "exclude": [ 
-    "lib"
+  "exclude": [
+    "lib",
+    "node_modules"
   ]
 }

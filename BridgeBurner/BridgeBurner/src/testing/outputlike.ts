@@ -1,4 +1,5 @@
 ﻿export interface OutPutLike {
-    write(message: string): void;
+    write(title: string, message: string, passed: boolean): void;
     format(format: string, parameterObject?: any): string;
+    clear():void;
 }

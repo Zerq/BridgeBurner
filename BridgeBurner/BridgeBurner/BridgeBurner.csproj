@@ -3,10 +3,30 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\es6unittest.ts" />
+    <None Remove="src\io\document.ts" />
+    <None Remove="src\io\file.ts" />
+    <None Remove="src\util\StyleConstructor.ts" />
+    <None Remove="src\view\view.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\es6unittest.ts" />
+    <TypeScriptCompile Include="src\util\state.ts" />
+    <TypeScriptCompile Include="src\io\file.ts" />
+    <TypeScriptCompile Include="src\util\StyleConstructor.ts" />
+    <TypeScriptCompile Include="src\view\view.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />

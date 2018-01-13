@@ -1,6 +1,6 @@
-﻿import { OutPutLike } from "./outputlike";
-import { Enumerable } from "./enumerable";
-import { Assert } from "./assert";
+﻿import { OutPutLike } from "./outputlike.js";
+import { Enumerable } from "./enumerable.js";
+import { Assert } from "./assert.js";
 
 export class ES6UnitTestBase {
     private output_: OutPutLike

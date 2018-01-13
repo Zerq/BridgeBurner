@@ -1,4 +1,4 @@
-export function test() {
+export function Test() {
     return function (target, propertyKey, descriptor) {
         descriptor.enumerable = true;
         if (!descriptor.value.$decorators) {

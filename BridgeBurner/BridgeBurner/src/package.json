@@ -2,9 +2,13 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
+  "scripts": {
+    "generate-dts": "dts-gen ./src/testing/index.js"
+  },
   "devDependencies": {
     "typescript": "2.6.2",
-    "gulp": "3.9.1"
+    "gulp": "3.9.1",
+    "dts-gen": "0.5.7"
   },
   "dependencies": {
   }

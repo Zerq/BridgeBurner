@@ -1,5 +1,4 @@
-﻿import { ES6UnitTestBase } from "./es6unittestbase";
-
+﻿import { ES6UnitTestBase } from "./es6unittestbase.js";
 export class Assert {
     private parent: ES6UnitTestBase;
     public constructor(test: ES6UnitTestBase) {
@@ -17,13 +16,13 @@ export class Assert {
 
         if (expected !== actual) {
             if (message) {
-                this.parent.output.write(this.parent.output.format(message, parameterObject));
+                this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
             } else {
-                this.parent.output.write(this.parent.output.format("{$test} failed.", parameterObject));
+                this.parent.output.write(name,"", false);
             }
 
         } else {
-            this.parent.output.write(this.parent.output.format("{$test} passed.", parameterObject));
+            this.parent.output.write(name, "", true);
         }
 
     }
@@ -38,13 +37,13 @@ export class Assert {
 
         try {
             func();
-            this.parent.output.format("{$test} passed.", parameterObject);
+            this.parent.output.write(name, "", true);
         } catch (error) {
             parameterObject["$errorMessage"] = error;
             if (message) {
-                this.parent.output.format(message, parameterObject);
+                this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
             } else {
-                this.parent.output.format("{$test} failed.", parameterObject);
+                this.parent.output.write(name, "", false);
             }
         }
     }
@@ -58,21 +57,21 @@ export class Assert {
         }
         try {
             promiseFunc.then(() => {
-                this.parent.output.format("{$test} passed.", parameterObject);
+                this.parent.output.write(name, "", true); 
             }).then(e => {
                 parameterObject["$errorMessage"] = e;
                 if (message) {
-                    this.parent.output.write(this.parent.output.format(message, parameterObject));
+                    this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
                 } else {
-                    this.parent.output.write(this.parent.output.format("{$test} failed.", parameterObject));
+                    this.parent.output.write(name, "", false); 
                 }
             });
         } catch (error) {
             parameterObject["$errorMessage"] = error;
             if (message) {
-                this.parent.output.write(this.parent.output.format(message, parameterObject));
+                this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
             } else {
-                this.parent.output.write(this.parent.output.format("{$test} failed.", parameterObject));
+                this.parent.output.write(name, "", false); 
             }
         }
     }
@@ -88,9 +87,9 @@ export class Assert {
 
 
         if (message) {
-            this.parent.output.write(this.parent.output.format(message, parameterObject));
+            this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
         } else {
-            this.parent.output.write(this.parent.output.format("{$test} failed.", parameterObject));
+            this.parent.output.write(name, "", false); 
         }
 
 
@@ -109,5 +108,4 @@ export class Assert {
         }
 
     }
-
 }

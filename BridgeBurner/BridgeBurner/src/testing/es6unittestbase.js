@@ -7,29 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { enumerable } from "./enumerable";
-import { Assert } from "./assert";
-export class ConsoleOutput {
-    write(message) {
-        console.log(message);
-    }
-    format(format, parameterObject) {
-        let result = format.toString();
-        for (let index in parameterObject) {
-            let rex;
-            if (index.startsWith("$")) {
-                rex = RegExp("\\{\\" + index + "\\}", "g");
-                ;
-            }
-            else {
-                rex = RegExp("\\{" + index + "\\}", "g");
-                ;
-            }
-            result = result.replace(rex, parameterObject[index]);
-        }
-        return result;
-    }
-}
+import { Enumerable } from "./enumerable.js";
+import { Assert } from "./assert.js";
 export class ES6UnitTestBase {
     get output() {
         return this.output_;
@@ -53,17 +32,17 @@ export class ES6UnitTestBase {
     }
 }
 __decorate([
-    enumerable(false),
+    Enumerable(false),
     __metadata("design:type", Object),
     __metadata("design:paramtypes", [Object])
 ], ES6UnitTestBase.prototype, "output", null);
 __decorate([
-    enumerable(false),
+    Enumerable(false),
     __metadata("design:type", Assert),
     __metadata("design:paramtypes", [])
 ], ES6UnitTestBase.prototype, "assert", null);
 __decorate([
-    enumerable(false),
+    Enumerable(false),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

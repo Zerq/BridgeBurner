@@ -1,9 +1,6 @@
-﻿import { OutPutLike } from "./outputlike";
+﻿import { OutPutLike } from "./outputlike.js";
 
 export class ConsoleOutput implements OutPutLike {
-    write(message: string): void {
-        console.log(message);
-    }
     format(format: string, parameterObject?: any): string {
         let result = format.toString();
         for (let index in parameterObject) {
@@ -13,10 +10,14 @@ export class ConsoleOutput implements OutPutLike {
             } else {
                 rex = RegExp("\\{" + index + "\\}", "g");;
             }
-
             result = result.replace(rex, parameterObject[index]);
         }
         return result;
     }
-
+    clear(): void {
+        console.clear();
+    }
+    write(title: string, message: string, passed: boolean): void {
+       console.log(`(passed) ${title}: ${message}`);
+    }
 }
