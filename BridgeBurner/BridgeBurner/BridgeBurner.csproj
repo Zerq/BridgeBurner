@@ -13,7 +13,7 @@
     <None Remove="src\io\document.ts" />
     <None Remove="src\io\file.ts" />
     <None Remove="src\util\StyleConstructor.ts" />
-    <None Remove="src\view\view.ts" />
+    <None Remove="src\view\viewEngine.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
@@ -26,7 +26,7 @@
     <TypeScriptCompile Include="src\util\state.ts" />
     <TypeScriptCompile Include="src\io\file.ts" />
     <TypeScriptCompile Include="src\util\StyleConstructor.ts" />
-    <TypeScriptCompile Include="src\view\view.ts" />
+    <TypeScriptCompile Include="src\view\viewEngine.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />

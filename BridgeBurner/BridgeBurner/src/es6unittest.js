@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+import { ViewEngine } from "./view/viewEngine.js";
 import { StyleConstructor } from "./util/styleconstructor.js";
 import { File } from "./io/file.js";
 import { State } from "./util/state.js";
@@ -18,12 +19,23 @@ class FileTest extends ES6UnitTestBase {
         let request = await File.RequestAsync("filetest.txt");
         this.assert.areEqual("File test", request.responseText, "burklax");
     }
-    async fail1() {
+    async loadInlineView() {
         StyleConstructor.test();
-        this.assert.fail("fail1");
+        await this.assert.tryExpressionAsync("try load inline view", async () => {
+            let item = await ViewEngine.loadTemplate("test1");
+            if (!item) {
+                throw Error("inline template not found");
+            }
+        });
     }
-    async fail2() {
-        this.assert.fail("fail2");
+    async loadView() {
+        StyleConstructor.test();
+        await this.assert.tryExpressionAsync("try load  view", async () => {
+            let item = await ViewEngine.loadTemplate("./fileTest.html");
+            if (!item) {
+                throw Error("template not found");
+            }
+        });
     }
 }
 __decorate([
@@ -37,13 +49,13 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], FileTest.prototype, "fail1", null);
+], FileTest.prototype, "loadInlineView", null);
 __decorate([
     Test(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], FileTest.prototype, "fail2", null);
+], FileTest.prototype, "loadView", null);
 export class App {
     static async Run() {
         await State.Ready();

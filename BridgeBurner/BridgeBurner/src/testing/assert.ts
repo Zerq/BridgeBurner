@@ -47,34 +47,28 @@ export class Assert {
             }
         }
     }
-    public tryExpressionAsync(name: string, promiseFunc: Promise<void>, message?: string, parameterObject?: any) {
+    public async tryExpressionAsync(name: string, func: ()  => void, message?: string, parameterObject?: any) {
         let emptyParameter = false;
         if (parameterObject === undefined) {
             emptyParameter = true;
-            parameterObject = { $test: name };
+            parameterObject = { $test: name }
         } else {
             parameterObject["$test"] = name;
         }
+
         try {
-            promiseFunc.then(() => {
-                this.parent.output.write(name, "", true); 
-            }).then(e => {
-                parameterObject["$errorMessage"] = e;
-                if (message) {
-                    this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
-                } else {
-                    this.parent.output.write(name, "", false); 
-                }
-            });
+            await func();
+            this.parent.output.write(name, "", true);
         } catch (error) {
             parameterObject["$errorMessage"] = error;
             if (message) {
                 this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
             } else {
-                this.parent.output.write(name, "", false); 
+                this.parent.output.write(name, "", false);
             }
         }
     }
+
     public fail(name: string, message?: string, parameterObject?: any) {
         let emptyParameter = false;
         if (parameterObject === undefined) {
@@ -90,6 +84,25 @@ export class Assert {
             this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
         } else {
             this.parent.output.write(name, "", false); 
+        }
+
+
+    }
+    public pass(name: string, message?: string, parameterObject?: any) {
+        let emptyParameter = false;
+        if (parameterObject === undefined) {
+            emptyParameter = true;
+            parameterObject = { $test: name }
+        }
+        else {
+            parameterObject["$test"] = name;
+        }
+
+
+        if (message) {
+            this.parent.output.write(name, this.parent.output.format(message, parameterObject), true);
+        } else {
+            this.parent.output.write(name, "", true);
         }
 
 

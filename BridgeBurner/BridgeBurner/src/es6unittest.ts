@@ -1,4 +1,5 @@
-﻿import { StyleConstructor } from "./util/styleconstructor.js";
+﻿import { ViewEngine } from "./view/viewEngine.js";
+import { StyleConstructor } from "./util/styleconstructor.js";
 import { File } from "./io/file.js";
 import { State } from "./util/state.js";
 import { ES6UnitTestBase } from "./testing/es6unittestbase.js";
@@ -13,15 +14,25 @@ class FileTest extends ES6UnitTestBase {
     }
 
     @Test()
-    public async fail1() {
+    public async loadInlineView() {
         StyleConstructor.test();
-
-        this.assert.fail("fail1");
+        await this.assert.tryExpressionAsync("try load inline view",async () => {
+            let item = await ViewEngine.loadTemplate("test1");
+            if (!item) {
+                throw Error("inline template not found");
+            }
+        });
     }
 
     @Test()
-    public async fail2() {
-        this.assert.fail("fail2");
+    public async loadView() {
+        StyleConstructor.test();
+        await this.assert.tryExpressionAsync("try load  view", async () => {
+            let item = await ViewEngine.loadTemplate("./fileTest.html");
+            if (!item) {
+                throw Error("template not found");
+            }      
+        });
     }
 }
 

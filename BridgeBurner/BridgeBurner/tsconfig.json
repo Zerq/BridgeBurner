@@ -10,7 +10,8 @@
     "sourceMap": true
   },
   "exclude": [
-    "lib",
-    "node_modules"
+    "src/lib",
+    "src/node_modules",
+    "wwwroot"
   ]
 }

@@ -46,7 +46,7 @@ export class Assert {
             }
         }
     }
-    tryExpressionAsync(name, promiseFunc, message, parameterObject) {
+    async tryExpressionAsync(name, func, message, parameterObject) {
         let emptyParameter = false;
         if (parameterObject === undefined) {
             emptyParameter = true;
@@ -56,17 +56,8 @@ export class Assert {
             parameterObject["$test"] = name;
         }
         try {
-            promiseFunc.then(() => {
-                this.parent.output.write(name, "", true);
-            }).then(e => {
-                parameterObject["$errorMessage"] = e;
-                if (message) {
-                    this.parent.output.write(name, this.parent.output.format(message, parameterObject), false);
-                }
-                else {
-                    this.parent.output.write(name, "", false);
-                }
-            });
+            await func();
+            this.parent.output.write(name, "", true);
         }
         catch (error) {
             parameterObject["$errorMessage"] = error;
@@ -92,6 +83,22 @@ export class Assert {
         }
         else {
             this.parent.output.write(name, "", false);
+        }
+    }
+    pass(name, message, parameterObject) {
+        let emptyParameter = false;
+        if (parameterObject === undefined) {
+            emptyParameter = true;
+            parameterObject = { $test: name };
+        }
+        else {
+            parameterObject["$test"] = name;
+        }
+        if (message) {
+            this.parent.output.write(name, this.parent.output.format(message, parameterObject), true);
+        }
+        else {
+            this.parent.output.write(name, "", true);
         }
     }
     static Instance(test) {

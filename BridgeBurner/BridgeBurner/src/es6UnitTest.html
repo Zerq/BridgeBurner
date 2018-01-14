@@ -3,6 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <template id="test1">
+        <div data-repeater="item in items">
+            <p>
+                ${item.name}
+            </p>
+        </div>
+    </template>
     <script type="module" async src="es6unittest.js"></script>
 </head>
 <body>
