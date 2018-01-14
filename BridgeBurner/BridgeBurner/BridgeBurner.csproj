@@ -12,7 +12,7 @@
     <None Remove="src\es6unittest.ts" />
     <None Remove="src\io\document.ts" />
     <None Remove="src\io\file.ts" />
-    <None Remove="src\util\StyleConstructor.ts" />
+    <None Remove="src\util\PathUtil.ts" />
     <None Remove="src\view\viewEngine.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -23,9 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\es6unittest.ts" />
+    <TypeScriptCompile Include="src\util\pathutil.ts" />
     <TypeScriptCompile Include="src\util\state.ts" />
     <TypeScriptCompile Include="src\io\file.ts" />
-    <TypeScriptCompile Include="src\util\StyleConstructor.ts" />
     <TypeScriptCompile Include="src\view\viewEngine.ts" />
   </ItemGroup>
   <ItemGroup>

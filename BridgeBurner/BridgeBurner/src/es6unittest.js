@@ -8,7 +8,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { ViewEngine } from "./view/viewEngine.js";
-import { StyleConstructor } from "./util/styleconstructor.js";
 import { File } from "./io/file.js";
 import { State } from "./util/state.js";
 import { ES6UnitTestBase } from "./testing/es6unittestbase.js";
@@ -20,16 +19,17 @@ class FileTest extends ES6UnitTestBase {
         this.assert.areEqual("File test", request.responseText, "burklax");
     }
     async loadInlineView() {
-        StyleConstructor.test();
         await this.assert.tryExpressionAsync("try load inline view", async () => {
             let item = await ViewEngine.loadTemplate("test1");
             if (!item) {
                 throw Error("inline template not found");
             }
+            let root = document.createElement("RootNode");
+            root.innerHTML = item;
+            ViewEngine.parse(root);
         });
     }
     async loadView() {
-        StyleConstructor.test();
         await this.assert.tryExpressionAsync("try load  view", async () => {
             let item = await ViewEngine.loadTemplate("./fileTest.html");
             if (!item) {

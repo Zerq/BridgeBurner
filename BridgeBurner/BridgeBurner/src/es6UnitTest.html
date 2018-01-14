@@ -4,16 +4,16 @@
     <meta charset="utf-8" />
     <title></title>
     <template id="test1">
-        <div data-repeater="item in items">
+        <OmniRepeater forEach="item in items">
             <p>
                 ${item.name}
             </p>
-        </div>
+        </OmniRepeater>
     </template>
     <script type="module" async src="es6unittest.js"></script>
 </head>
 <body>
-    <h3>File Unittest</h3>
+    <h3>Unittests</h3>
     <div id="filetest"></div>
 </body>
 </html>
