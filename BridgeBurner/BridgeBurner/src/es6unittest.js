@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+import { JsonObjectifier } from "./json/jsonobjectifier.js";
 import { ViewEngine } from "./view/viewEngine.js";
 import { File } from "./io/file.js";
 import { State } from "./util/state.js";
@@ -14,6 +15,15 @@ import { ES6UnitTestBase } from "./testing/es6unittestbase.js";
 import { Test } from "./testing/test.js";
 import { MarkupOutput } from "./testing/markupoutput.js";
 class FileTest extends ES6UnitTestBase {
+    async jsonTest() {
+        let test = '[{ "$id": "1", "xxxx": [{ "$id": "2", "Time": "$$DateTime=2018-01-23 00:00:00", "Name": "zog", "Parent": { "$ref": "1" } }], "Name": "burklax", "Time": "$$DateTime=1982-08-08 00:00:00" }]';
+        let result = JsonObjectifier.objectify(test);
+        this.assert.areEqual("Json test Name property", "burklax", result[0].Name);
+        let a = new Date(2018, 0, 23, 0, 0, 0).toDateString();
+        let b = result[0].xxxx[0].Time.toDateString();
+        this.assert.areEqual("Json time on child", a, b);
+        let result2 = JsonObjectifier.deObjectify(result);
+    }
     async canLoadFile() {
         let request = await File.RequestAsync("filetest.txt");
         this.assert.areEqual("File test", request.responseText, "burklax");
@@ -26,7 +36,7 @@ class FileTest extends ES6UnitTestBase {
             }
             let root = document.createElement("RootNode");
             root.innerHTML = item;
-            ViewEngine.parse(root);
+            ViewEngine.parse(root, { items: [{ name: "spog" }, { name: "wörbl" }, { name: "Yarplharg" }] });
         });
     }
     async loadView() {
@@ -38,6 +48,12 @@ class FileTest extends ES6UnitTestBase {
         });
     }
 }
+__decorate([
+    Test(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], FileTest.prototype, "jsonTest", null);
 __decorate([
     Test(),
     __metadata("design:type", Function),

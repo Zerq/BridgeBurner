@@ -1,4 +1,5 @@
-import { File } from '../io/file.js';
+import { PathUtil } from "../util/pathutil.js";
+import { File } from "../io/file.js";
 export class ViewEngine {
     static async loadTemplate(path) {
         var template = document.getElementById(path);
@@ -10,26 +11,32 @@ export class ViewEngine {
         var request = await File.RequestAsync(path, 300);
         return request.responseText;
     }
-    static repeater(item) {
+    static repeaterLogic(item, model) {
+        let attr = item.getAttribute("forEach");
+        if (attr) {
+            let split = attr.split(" in ");
+            if (split.length == 2) {
+                let list = PathUtil.findOrReplace(split[1], model);
+                list.forEach(n => {
+                    for (let i = 0; i < item.children.length; i++) {
+                        ViewEngine.parse(item.children[i], n);
+                    }
+                });
+            }
+            alert("burklax_" + item.innerText);
+            item.children;
+        }
     }
-    static repeaterLogic(item) {
-        alert("burklax_" + item.innerText);
-    }
-    static parse(item) {
-        let handlerItem = ViewEngine.components[item.tagName];
+    static parse(template, model) {
+        let handlerItem = ViewEngine.components[template.tagName];
         if (handlerItem) {
-            handlerItem(item);
+            handlerItem(template);
         }
         else {
-            for (let i = 0; i < item.children.length; i++) {
-                ViewEngine.parse(item.children[i]);
+            for (let i = 0; i < template.children.length; i++) {
+                ViewEngine.parse(template.children[i], model);
             }
         }
-    }
-    static async x(path) {
-        let doc = document.createElement("RootNode");
-        doc.innerHTML = await ViewEngine.loadTemplate(path);
-        ViewEngine.parse(doc);
     }
 }
 ViewEngine.components = {

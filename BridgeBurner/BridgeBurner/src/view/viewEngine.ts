@@ -1,6 +1,6 @@
 ﻿import { PathUtil } from "../util/pathutil.js";
-import { File } from '../io/file.js';
-
+import { File } from "../io/file.js";
+import { Lexer } from "../lib/typed-lexer/dist/typed-lexer";
  
 
 export class ViewEngine {
@@ -41,20 +41,15 @@ export class ViewEngine {
 
     }
 
-    public static parse(item: HTMLElement, model:any): void {
-        let handlerItem = ViewEngine.components[item.tagName];
+    public static parse(template: HTMLElement, model:any): void {
+        let handlerItem = ViewEngine.components[template.tagName];
         if (handlerItem) {
-            handlerItem(item);
+            handlerItem(template);
         } else {
-            for (let i = 0; i < item.children.length; i++) {
-                ViewEngine.parse(<HTMLElement>item.children[i], model);
+            for (let i = 0; i < template.children.length; i++) {
+                ViewEngine.parse(<HTMLElement>template.children[i], model);
             }
         }
     }
-
-    public static async x(path: string) {
-        let doc = document.createElement("RootNode");
-        doc.innerHTML = await ViewEngine.loadTemplate(path);
-        ViewEngine.parse(doc);
-    }
+ 
 }

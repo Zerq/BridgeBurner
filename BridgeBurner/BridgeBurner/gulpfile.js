@@ -8,8 +8,11 @@ var gulp = require('gulp');
 
 gulp.task('default', () => { });
 
+gulp.task('nmp', () => {
+    gulp.src("node_modules/typed-lexer/**/*.*").pipe(gulp.dest("src/lib/typed-lexer"));
+    gulp.src("node_modules/typed-lexer/**/*.*").pipe(gulp.dest("wwwroot/lib/typed-lexer"));
 
-
+});
 
 gulp.task('moveHtml', () => {
     gulp.src("src/**/*.html").pipe(gulp.dest("wwwroot"));
