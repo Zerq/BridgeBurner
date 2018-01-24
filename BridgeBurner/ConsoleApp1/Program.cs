@@ -62,6 +62,10 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+
+            var d3x =  $"{new DateTime(1982,12,4,6,0,14)}".Replace(" ","T");
+
+
             JsonSerializer serializer = new JsonSerializer();
 
 

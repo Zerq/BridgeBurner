@@ -21,6 +21,19 @@ class FileTest extends ES6UnitTestBase {
 
 
 
+    @Test()
+    public async jsonTestStandard() {
+
+        let test: string = '[{ "$id": "1", "xxxx": [{ "$id": "2", "Time": "2018-01-23 00:00:00", "Name": "zog", "Parent": { "$ref": "1" } }], "Name": "burklax", "Time": "1982-08-08 00:00:00" }]';
+        let result: Array<x> = JsonObjectifier.objectify2<Array<x>>(test);
+        this.assert.areEqual("Json test Name property", "burklax", result[0].Name);
+        let a = new Date(2018, 0, 23, 0, 0, 0).toDateString();
+        let b = result[0].xxxx[0].Time.toDateString();
+        this.assert.areEqual("Json time on child", a, b);
+
+        let result2 = JsonObjectifier.deObjectify2(result);
+
+    }
 
 
     @Test()
