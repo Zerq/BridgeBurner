@@ -16,16 +16,7 @@ import { Test } from "./testing/test.js";
 import { MarkupOutput } from "./testing/markupoutput.js";
 class FileTest extends ES6UnitTestBase {
     async jsonTestStandard() {
-        let test = '[{ "$id": "1", "xxxx": [{ "$id": "2", "Time": "2018-01-23 00:00:00", "Name": "zog", "Parent": { "$ref": "1" } }], "Name": "burklax", "Time": "1982-08-08 00:00:00" }]';
-        let result = JsonObjectifier.objectify2(test);
-        this.assert.areEqual("Json test Name property", "burklax", result[0].Name);
-        let a = new Date(2018, 0, 23, 0, 0, 0).toDateString();
-        let b = result[0].xxxx[0].Time.toDateString();
-        this.assert.areEqual("Json time on child", a, b);
-        let result2 = JsonObjectifier.deObjectify2(result);
-    }
-    async jsonTest() {
-        let test = '[{ "$id": "1", "xxxx": [{ "$id": "2", "Time": "$$DateTime=2018-01-23 00:00:00", "Name": "zog", "Parent": { "$ref": "1" } }], "Name": "burklax", "Time": "$$DateTime=1982-08-08 00:00:00" }]';
+        let test = '[{"$id":"1","xxxx":[{"$id":"2","Time":{"$Type":"UTC","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"},"Name":"zog","Parent":{"$ref":"1"}}],"Name":"burklax","Time":{"$Type":"UTC","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"}}]';
         let result = JsonObjectifier.objectify(test);
         this.assert.areEqual("Json test Name property", "burklax", result[0].Name);
         let a = new Date(2018, 0, 23, 0, 0, 0).toDateString();
@@ -63,12 +54,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], FileTest.prototype, "jsonTestStandard", null);
-__decorate([
-    Test(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], FileTest.prototype, "jsonTest", null);
 __decorate([
     Test(),
     __metadata("design:type", Function),

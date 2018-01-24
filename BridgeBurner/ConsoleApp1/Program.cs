@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -47,29 +49,39 @@ namespace ConsoleApp1
     {
         public override DateTime ReadJson(JsonReader reader, Type objectType, DateTime existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            var result = serializer.Deserialize(reader).ToString().Replace("$$DateTime=","");
-            return DateTime.Parse(result);
+            var original = serializer.Deserialize(reader).ToString();
+            var pos1 = original.IndexOf("+");
+            var pos2 = original.Substring(0, pos1 + 3) + ":00";
+            var result = DateTime.ParseExact(pos2, "ddd MMM MM yyyy HH:mm:ss \\G\\M\\Tzzz", CultureInfo.InvariantCulture);
+            return result;
         }
 
         public override void WriteJson(JsonWriter writer, DateTime value, JsonSerializer serializer)
-        {
-            writer.WriteValue("$$DateTime=" + value.Date.ToString());
+        {        
+            writer.WriteStartObject();
+            writer.WritePropertyName("$Type");
+            writer.WriteValue("UTC");
+            writer.WritePropertyName("$Value");
+            writer.WriteValue(value.ToString("ddd MMM MM yyyy HH:mm:ss \\G\\M\\Tzzz"));
+            writer.WriteEnd();       
         }
     }
 
 
     class Program
     {
+
+ 
+
         static void Main(string[] args)
         {
-
-            var d3x =  $"{new DateTime(1982,12,4,6,0,14)}".Replace(" ","T");
-
+                   //  "Wed, 01 Jan 2018 22:12:25 GMT+01:00"
+    
 
             JsonSerializer serializer = new JsonSerializer();
 
 
-            var r345345x = JsonConvert.DeserializeObject<List<TestModel>>(File.ReadAllText("sdfsfsdfsfs.json"));
+          //  var r345345x = JsonConvert.DeserializeObject<List<TestModel>>(File.ReadAllText("sdfsfsdfsfs.json"));
 
 
             var x = JsonConvert.SerializeObject(TestModel.instance(),new JsonSerializerSettings{ PreserveReferencesHandling= PreserveReferencesHandling.Objects });
