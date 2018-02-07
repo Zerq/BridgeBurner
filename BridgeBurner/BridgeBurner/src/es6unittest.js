@@ -16,7 +16,7 @@ import { Test } from "./testing/test.js";
 import { MarkupOutput } from "./testing/markupoutput.js";
 class FileTest extends ES6UnitTestBase {
     async jsonTestStandard() {
-        let test = '[{"$id":"1","xxxx":[{"$id":"2","Time":{"$Type":"UTC","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"},"Name":"zog","Parent":{"$ref":"1"}}],"Name":"burklax","Time":{"$Type":"UTC","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"}}]';
+        let test = '[{"$id":"1","xxxx":[{"$id":"2","Time":{"$Type":"DateTime","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"},"Name":"zog","Parent":{"$ref":"1"}}],"Name":"burklax","Time":{"$Type":"DateTime","$Value":"Wed Jan 01 2018 22:14:41 GMT+01:00"}}]';
         let result = JsonObjectifier.objectify(test);
         this.assert.areEqual("Json test Name property", "burklax", result[0].Name);
         let a = new Date(2018, 0, 23, 0, 0, 0).toDateString();
@@ -80,5 +80,64 @@ export class App {
         test.runAll();
     }
 }
-App.Run();
+//App.Run();
+function LongestStringLenght(array, getter) {
+    if (array.length) {
+        let result = array.sort((a, b) => {
+            let aa = getter(a).toString().length;
+            let bb = getter(b).toString().length;
+            if (aa < bb) {
+                return 1;
+            }
+            else if (bb < aa) {
+                return -1;
+            }
+            else if (aa === bb) {
+                return 0;
+            }
+            else {
+                throw new Error("sorting error"); // this should not be reachable.... i would hope...
+            }
+        });
+        return getter(result[0]).toString().length;
+    }
+    else {
+        return 0;
+    }
+}
+let list = [{ zog: 5, hark: "fds gdfgdg" }, { zog: 2, hark: "fderter gdg" }, { zog: 6, hark: "fdsge rete te ert dfgdg" }];
+let x = LongestStringLenght(list, n => n.hark);
+var fdiv = document.getElementById("filetest");
+if (fdiv) {
+    let index2 = 0;
+    for (let index in list) {
+        let div = document.createElement("div");
+        div.innerText = list[index].hark;
+        fdiv.appendChild(div);
+        let zog = div.getBoundingClientRect();
+        let xcv = 5555;
+    }
+    let xdd = fdiv.getElementsByTagName("div");
+    let max = 0;
+    for (let index in xdd) {
+        let item = xdd[index];
+        if (item.getBoundingClientRect) {
+            let xfg = item.getBoundingClientRect().width;
+            if (xfg > max) {
+                max = xfg;
+            }
+        }
+    }
+    for (let index in xdd) {
+        let item = xdd[index];
+        if (item.getBoundingClientRect) {
+            // item.style.backgroundColor = "cyan";
+            item.style.width = max + "px";
+            item.style.display = "inline";
+            let xd = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",255)";
+            item.style.backgroundColor = xd;
+            let x = 5;
+        }
+    }
+}
 //# sourceMappingURL=es6unittest.js.map

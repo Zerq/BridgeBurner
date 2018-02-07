@@ -13,7 +13,7 @@ namespace ConsoleApp1
 
     public class TestModelet
     {
-        [JsonConverter(typeof(DataConverter))]
+        [JsonConverter(typeof(DateConverter))]
         public DateTime Time { get; set; }
         public string Name { get; set; }
         public TestModel Parent { get; set; }
@@ -25,7 +25,7 @@ namespace ConsoleApp1
         public List<TestModelet> xxxx { get; set; }
         public string Name { get; set; }
 
-        [JsonConverter(typeof(DataConverter))]
+        [JsonConverter(typeof(DateConverter))]
         public DateTime Time { get; set; }
 
         public static List<TestModel> instance()
@@ -45,7 +45,7 @@ namespace ConsoleApp1
         }
     }
 
-    public class DataConverter : JsonConverter<DateTime>
+    public class DateConverter : JsonConverter<DateTime>
     {
         public override DateTime ReadJson(JsonReader reader, Type objectType, DateTime existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
@@ -60,7 +60,7 @@ namespace ConsoleApp1
         {        
             writer.WriteStartObject();
             writer.WritePropertyName("$Type");
-            writer.WriteValue("UTC");
+            writer.WriteValue("DateTime");
             writer.WritePropertyName("$Value");
             writer.WriteValue(value.ToString("ddd MMM MM yyyy HH:mm:ss \\G\\M\\Tzzz"));
             writer.WriteEnd();       

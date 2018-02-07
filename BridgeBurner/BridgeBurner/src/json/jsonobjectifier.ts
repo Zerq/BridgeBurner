@@ -39,7 +39,7 @@ export class JsonObjectifier {
     public static fixDate(obj: any): any{
         for (let i1 in obj) {
             if (typeof (obj[i1]) === 'object') {
-                if (obj[i1].$Type && obj[i1].$Type == "UTC") {
+                if (obj[i1].$Type && obj[i1].$Type == "DateTime") {
                     obj[i1] = new Date(obj[i1].$Value);
                 }
                 else {
@@ -53,7 +53,7 @@ export class JsonObjectifier {
         for (let i1 in obj) {
             if (Object.prototype.toString.call(obj[i1]) === "[object Date]") {
                 obj[i1] = {
-                    $Type: "UTC",
+                    $Type: "DateTime",
                     $Value: obj[i1].toString()
                 };
             }else if (Object.prototype.toString.call(obj[i1]) === "[object array]") {
