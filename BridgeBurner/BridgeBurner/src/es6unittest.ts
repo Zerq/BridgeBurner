@@ -79,9 +79,11 @@ export class App {
 }
 //App.Run();
 
+export class StyleTricks {
 
+    
 
-function LongestStringLenght<T>(array: Array<T>, getter: (n: any) => any): number {
+private static LongestStringLenght<T>(array: Array<T>, getter: (n: any) => any): number {
     if (array.length) {
         let result = array.sort((a: T, b: T) => {
             let aa = getter(a).toString().length;
@@ -101,8 +103,39 @@ function LongestStringLenght<T>(array: Array<T>, getter: (n: any) => any): numbe
         return 0;
     }
 }
+
+    public static setToMaxWidth(className: string) {
+        let xdd = document.getElementsByClassName(className);
+        let max = 0;
+
+        for (let index in xdd) {
+            let item: HTMLElement = <HTMLElement>xdd[index];
+            if (item.getBoundingClientRect) {
+                let xfg = item.getBoundingClientRect().width;
+                let a = Object.prototype.toString.call(item);
+                let b = Object.prototype.toString.call(HTMLDivElement.prototype);
+                if (a === b) {
+                    if (xfg > max) {
+                        max = xfg;
+                    }
+                }
+
+            }
+        }
+
+        for (let index in xdd) {
+            let item: HTMLElement = <HTMLElement>xdd[index];
+            if (item.getBoundingClientRect) {
+                item.style.width = max + "px";
+                let x = 5;
+            }
+        }
+    }
+
+
+}
 let list = [{ zog: 5, hark: "fds gdfgdg" }, { zog: 2, hark: "fderter gdg" }, { zog: 6, hark: "fdsge rete te ert dfgdg" }];
-let x = LongestStringLenght(list, n => n.hark);
+ 
 
 var fdiv = document.getElementById("filetest");
 if (fdiv) {
@@ -110,37 +143,17 @@ if (fdiv) {
     let index2 = 0;
     for (let index in list) {
         let div: HTMLDivElement = document.createElement("div");
+        div.style.display = "inline-block";
+        let xd = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",255)";
+        div.style.backgroundColor = xd;  
+        div.className = "spog";
         div.innerText = list[index].hark;
         fdiv.appendChild(div);
         let zog = div.getBoundingClientRect();
         let xcv = 5555;
-    }
+    }   
+} 
 
-    let xdd =  fdiv.getElementsByTagName("div");
-    let max = 0; 
+StyleTricks.setToMaxWidth("spog");
 
-    for (let index in xdd) {
-        let item: HTMLDivElement = xdd[index];
-        if (item.getBoundingClientRect) {
-            let xfg = item.getBoundingClientRect().width;
-            if (Object.toString.call(item) === Object.toString.call(HTMLDivElement)) {
 
-            }
-            if (xfg > max) {
-                max = xfg;
-            }
-        }
-    }
- 
-    for (let index in xdd) {
-        let item: HTMLDivElement = xdd[index];
-        if (item.getBoundingClientRect) {
-           // item.style.backgroundColor = "cyan";
-            item.style.width = max + "px";
-            item.style.display = "inline";
-            let xd = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",255)";
-            item.style.backgroundColor = xd;  
-            let x = 5;
-        }
-    }
-}
