@@ -104,42 +104,22 @@ private static LongestStringLenght<T>(array: Array<T>, getter: (n: any) => any):
     }
 }
 
-    public static setToMaxWidth(className: string) {
-        let xdd = document.getElementsByClassName(className);
+public static setToMaxWidth(className: string, element: HTMLElement) {  
+        let targets = <Array<HTMLElement>>Array.prototype.slice.call(element.getElementsByClassName(className), 0)
         let max = 0;
-
-        for (let index in xdd) {
-            let item: HTMLElement = <HTMLElement>xdd[index];
-            if (item.getBoundingClientRect) {
-                let xfg = item.getBoundingClientRect().width;
-                let a = Object.prototype.toString.call(item);
-                let b = Object.prototype.toString.call(HTMLDivElement.prototype);
-                if (a === b) {
-                    if (xfg > max) {
-                        max = xfg;
-                    }
-                }
-
-            }
-        }
-
-        for (let index in xdd) {
-            let item: HTMLElement = <HTMLElement>xdd[index];
-            if (item.getBoundingClientRect) {
-                item.style.width = max + "px";
-                let x = 5;
-            }
-        }
+        targets
+            .map(n => n.getBoundingClientRect ?
+                n.getBoundingClientRect().width > max ?
+                    max = n.getBoundingClientRect().width : undefined
+                : undefined);
+        targets.map(n => n.style.width = max + "px");
     }
-
-
 }
 let list = [{ zog: 5, hark: "fds gdfgdg" }, { zog: 2, hark: "fderter gdg" }, { zog: 6, hark: "fdsge rete te ert dfgdg" }];
  
 
 var fdiv = document.getElementById("filetest");
 if (fdiv) {
-
     let index2 = 0;
     for (let index in list) {
         let div: HTMLDivElement = document.createElement("div");
@@ -152,8 +132,9 @@ if (fdiv) {
         let zog = div.getBoundingClientRect();
         let xcv = 5555;
     }   
+    StyleTricks.setToMaxWidth("spog", fdiv);
 } 
 
-StyleTricks.setToMaxWidth("spog");
+
 
 

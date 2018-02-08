@@ -106,29 +106,16 @@ export class StyleTricks {
             return 0;
         }
     }
-    static setToMaxWidth(className) {
-        let xdd = document.getElementsByClassName(className);
+    static setToMaxWidth(className, element) {
+        let targets = Array.prototype.slice.call(element.getElementsByClassName(className), 0);
         let max = 0;
-        for (let index in xdd) {
-            let item = xdd[index];
-            if (item.getBoundingClientRect) {
-                let xfg = item.getBoundingClientRect().width;
-                let a = Object.prototype.toString.call(item);
-                let b = Object.prototype.toString.call(HTMLDivElement.prototype);
-                if (a === b) {
-                    if (xfg > max) {
-                        max = xfg;
-                    }
-                }
-            }
-        }
-        for (let index in xdd) {
-            let item = xdd[index];
-            if (item.getBoundingClientRect) {
-                item.style.width = max + "px";
-                let x = 5;
-            }
-        }
+        targets
+            .map(n => n.getBoundingClientRect ?
+            n.getBoundingClientRect().width > max ?
+                max = n.getBoundingClientRect().width : undefined
+            : undefined);
+        targets.map(n => n.style.width = max + "px");
+        let x = 5435;
     }
 }
 let list = [{ zog: 5, hark: "fds gdfgdg" }, { zog: 2, hark: "fderter gdg" }, { zog: 6, hark: "fdsge rete te ert dfgdg" }];
@@ -146,6 +133,6 @@ if (fdiv) {
         let zog = div.getBoundingClientRect();
         let xcv = 5555;
     }
+    StyleTricks.setToMaxWidth("spog", fdiv);
 }
-StyleTricks.setToMaxWidth("spog");
 //# sourceMappingURL=es6unittest.js.map
