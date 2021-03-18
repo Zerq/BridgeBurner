@@ -115,7 +115,6 @@ export class StyleTricks {
                 max = n.getBoundingClientRect().width : undefined
             : undefined);
         targets.map(n => n.style.width = max + "px");
-        let x = 5435;
     }
 }
 let list = [{ zog: 5, hark: "fds gdfgdg" }, { zog: 2, hark: "fderter gdg" }, { zog: 6, hark: "fdsge rete te ert dfgdg" }];

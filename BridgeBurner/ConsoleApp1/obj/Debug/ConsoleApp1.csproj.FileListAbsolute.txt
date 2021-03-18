@@ -18,3 +18,13 @@ C:\Users\karla\source\repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\Cons
 C:\Users\karla\source\repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
 C:\Users\karla\source\repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\Newtonsoft.Json.dll
 C:\Users\karla\source\repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\sdfsfsdfsfs.json
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\obj\Debug\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\obj\Debug\ConsoleApp1.csproj.CopyComplete
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\ConsoleApp1\obj\Debug\ConsoleApp1.pdb

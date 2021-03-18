@@ -1,6 +1,8 @@
 import { State } from "../util/state.js";
 import { ConsoleOutput } from "./consoleoutput.js";
 export class MarkupOutput {
+    constructor() {
+    }
     write(title, message, passed) {
         let element = document.getElementById(this.containerId);
         if (element) {
@@ -69,8 +71,6 @@ margin: 5px;
     }
     format(format, parameterObject) {
         return ConsoleOutput.call(this, format, parameterObject);
-    }
-    constructor() {
     }
 }
 //# sourceMappingURL=markupoutput.js.map

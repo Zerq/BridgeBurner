@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "scripts": {
+    "run": "lite-server"
+  },
+  "devDependencies": {
+    "typescript": "4.2.3",
+    "lite-server": "2.6.1",
+    "nunit": "0.2.1"
+  }
+}

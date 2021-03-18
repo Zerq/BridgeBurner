@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "yvZv4cotfNAXb3WTgNbinb+nUoAaGsXtIVx+Dopu31NbGaKVFLSPjmHh0FxzMN4h8MUOt3u6IDN6c0dGOJqUrA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Zerq\\.nuget\\packages\\microsoft.typescript.msbuild\\4.2.3\\microsoft.typescript.msbuild.4.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
