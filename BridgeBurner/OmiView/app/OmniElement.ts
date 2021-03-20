@@ -1,4 +1,4 @@
-import { OmniView } from "./Omniview";
+import { OmniView } from "./Omniview.js";
 
 export class OmniElement extends HTMLElement {
     constructor() {
@@ -7,22 +7,34 @@ export class OmniElement extends HTMLElement {
 
     public get ParentView(): OmniView {
 
-        const view = this.tunnelOneStepForParentView(this.parentElement);
-        if (view !== null && view !== undefined) {
-            return {} as OmniView;
+        if (this && this.tagName.toLocaleLowerCase() === "o-view")
+        {
+            return (this as unknown) as OmniView;
         }
-        else {
-            throw new Error(`Orphaned Tag "${this.tagName}"`);
+
+        if (this && this.parentElement?.tagName.toLocaleLowerCase() === "o-view") {
+            return (this.parentElement as unknown) as OmniView;
         }
+
+        const shadowHost = (this.parentElement?.parentNode as ShadowRoot)?.host;
+
+        if (shadowHost.tagName.toLocaleLowerCase() === "o-view") {
+            return shadowHost as OmniView;
+
+        } else {
+            throw new Error(`Orphaned Tag "${this.tagName} is this ieven possible?"`);
+        }
+
+
     }
 
     private  tunnelOneStepForParentView(element: HTMLElement | null | undefined): OmniView | null | undefined {
 
-        if (element === undefined || element === undefined) {
+        if (element === null || element === undefined) {
             return null;
         }
 
-        if ((element as OmniView).tagName === "view") {
+        if ((element as OmniView).tagName.toLocaleLowerCase() === "o-view") {
             return element as OmniView;
         }
         else {

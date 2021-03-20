@@ -1,18 +1,49 @@
-import { OmniElement } from "./OmniElement";
+import { OmniElement } from "./OmniElement.js";
+/* eslint-disable  @typescript-eslint/no-explicit-any */ //I totlly ment to do that!
+export abstract class OmniDataBoundElement extends OmniElement {
 
-export class OmniDataBoundElement extends OmniElement {
-
-    /* eslint-disable  @typescript-eslint/no-explicit-any */ //I totlly ment to do that!
-    private _src: any;
-    public get src(): (n: any) => any {
-        return this._src;
+    constructor() {
+        super();
     }
-   public set src(value: (n: any) => any) {
-        this._src = value;
+
+    public abstract Bind(): void;
+
+    public get src(): string {
+        return (this.getAttribute("src") as unknown) as string;
+    }
+    public set src(value: string) {
+        this.setAttribute("src", value);
+    }
+
+
+    private tunnelChain(chain: Array<string>, current: any): any {
+        if (chain.length === 0) {
+            return current;
+        } else {
+            const currentStep = chain.shift() as string;
+            return this.tunnelChain(chain, current[currentStep]);
+        }    
     }
 
     public GetData(): any {
-        return this.src(this.ParentView.Model);
+        if (this.src) {
+            //this is a bit limited but at least there is no arbitrary execution
+            if (this.ParentView?.model != null) {
+                if (this.src.indexOf('.') === -1) {
+                    return this.ParentView.model[this.src];
+                } else {
+                    return this.tunnelChain(this.src.split('.'), this.ParentView.model);
+                } 
+            }         
+        } else {
+            return undefined;
+        }
     }
-    /* eslint-enable  @typescript-eslint/no-explicit-any */
+    static get observedAttributes() { return ['src']; }
+  
+    attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+        this.Bind();
+    }
+  
 }
+ 

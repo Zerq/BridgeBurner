@@ -3,19 +3,25 @@ export class OmniElement extends HTMLElement {
         super();
     }
     get ParentView() {
-        const view = this.tunnelOneStepForParentView(this.parentElement);
-        if (view !== null && view !== undefined) {
-            return {};
+        if (this && this.tagName.toLocaleLowerCase() === "o-view") {
+            return this;
+        }
+        if (this && this.parentElement?.tagName.toLocaleLowerCase() === "o-view") {
+            return this.parentElement;
+        }
+        const shadowHost = this.parentElement?.parentNode?.host;
+        if (shadowHost.tagName.toLocaleLowerCase() === "o-view") {
+            return shadowHost;
         }
         else {
-            throw new Error(`Orphaned Tag "${this.tagName}"`);
+            throw new Error(`Orphaned Tag "${this.tagName} is this ieven possible?"`);
         }
     }
     tunnelOneStepForParentView(element) {
-        if (element === undefined || element === undefined) {
+        if (element === null || element === undefined) {
             return null;
         }
-        if (element.tagName === "view") {
+        if (element.tagName.toLocaleLowerCase() === "o-view") {
             return element;
         }
         else {

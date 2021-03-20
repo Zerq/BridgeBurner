@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj": {}
+    "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj": {
+    "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj",
+        "projectUniqueName": "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj",
         "projectName": "OmiView",
-        "projectPath": "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj",
+        "projectPath": "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\OmiView\\OmiView.csproj",
         "packagesPath": "C:\\Users\\Zerq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Zerq\\Source\\Repos\\BridgeBurner\\BridgeBurner\\OmiView\\obj\\",
+        "outputPath": "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\OmiView\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
