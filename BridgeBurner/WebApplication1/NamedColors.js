@@ -1,4 +1,3 @@
-2;
 import { ConsoleColor } from "./ConsoleColor.js";
 export class NamedColors {
 }

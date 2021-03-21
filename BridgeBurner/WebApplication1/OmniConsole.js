@@ -7,6 +7,7 @@ export class OmniConsole {
         this.cursor = { x: 0, y: 0 };
         this.Echo = false;
         this.EchoFormat = (txt) => `>${txt}`;
+        this.SkipEmpty = false;
         this.readString = "";
         this.width = width;
         this.height = height;
@@ -20,6 +21,8 @@ export class OmniConsole {
         }
         this.hostId = hostId;
         const canvas = document.getElementById(hostId);
+        this.hostWidth = canvas.width;
+        this.hostHeight = canvas.height;
         this.context = canvas.getContext("2d");
     }
     SetBackground(color) {
@@ -35,12 +38,12 @@ export class OmniConsole {
         const fh = fontSize * 0.5;
         if (!this.autoDraw) {
             this.context.fillStyle = "black";
-            this.context.fillRect(0, 0, this.width * fw, this.height * fh);
+            this.context.fillRect(0, 0, this.hostWidth, this.hostHeight);
         }
         this.context.font = `${fontSize / 2}px monospace`;
         this.traverse((l, x, y) => {
             const cell = this.Cells[l];
-            if (cell.Char !== " ") {
+            if (cell.Char !== " " || !this.SkipEmpty) {
                 this.context.fillStyle = cell.Back.Color;
                 this.context.fillRect(fw * x, fh * y, fw, fh);
                 this.context.fillStyle = cell.Fore.Color;
@@ -135,10 +138,11 @@ export class OmniConsole {
         const fh = fontSize * 0.5;
         const chars = (">" + this.readString).split("");
         chars.forEach((c, i) => {
+            let yOff = Math.round(this.cursor.x + i) / this.width;
             this.context.fillStyle = this.Back.Color;
-            this.context.fillRect(fw * (this.cursor.x + i), fh * this.cursor.y, fw, fh);
+            this.context.fillRect(fw * ((this.cursor.x + i) % this.width), fh * (this.cursor.y + yOff), fw, fh);
             this.context.fillStyle = this.Fore.Color;
-            this.context.fillText(c, fw * (this.cursor.x + i) + (fw / 4), fh * this.cursor.y + (fh / 1.2), fontSize);
+            this.context.fillText(c, fw * ((this.cursor.x + i) % this.width) + (fw / 4), fh * (this.cursor.y + yOff) + (fh / 1.2), fontSize);
             this.context.fillStyle = this.Fore.Color;
         });
     }
@@ -153,11 +157,14 @@ export class OmniConsole {
                     }
                     this.SetBackground(NamedColors.Black);
                     this.Draw();
-                    resolve(this.readString);
+                    const result = this.readString;
                     this.readString = "";
+                    resolve(result);
+                    document.onkeyup = null;
                 }
                 else if (n.keyCode === 27) { //esc
                     reject();
+                    document.onkeyup = null;
                 }
                 else if (n.keyCode === 8) {
                     this.readString = this.readString.slice(0, -1);

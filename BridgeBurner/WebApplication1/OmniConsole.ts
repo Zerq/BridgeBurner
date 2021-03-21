@@ -12,11 +12,15 @@ export class OmniConsole {
     private cursor = { x: 0, y: 0 };
     private width: number;
     private height: number;
+    private hostWidth: number;
+    private hostHeight: number;
+
     private hostId: string;
     private context: CanvasRenderingContext2D;
     private autoDraw: boolean;
     public Echo = false;
-    public EchoFormat = (txt: string)=> `>${txt}`;
+    public EchoFormat = (txt: string) => `>${txt}`;
+    public SkipEmpty = false;
 
     public constructor(width: number, height: number, hostId: string, autoDraw = false, echo = false) {
         this.width = width;
@@ -33,6 +37,11 @@ export class OmniConsole {
 
         this.hostId = hostId;
         const canvas = document.getElementById(hostId) as HTMLCanvasElement;
+        this.hostWidth = canvas.width;
+        this.hostHeight = canvas.height;
+
+
+
         this.context = canvas.getContext("2d") as CanvasRenderingContext2D;
    
     }
@@ -54,14 +63,14 @@ export class OmniConsole {
 
         if (!this.autoDraw) {
             this.context.fillStyle = "black";
-            this.context.fillRect(0, 0, this.width * fw, this.height * fh);
+            this.context.fillRect(0, 0, this.hostWidth, this.hostHeight);
         }
 
 
         this.context.font = `${fontSize / 2}px monospace`;
         this.traverse((l, x, y) => {
             const cell = (this.Cells[l] as Cell);
-            if (cell.Char !== " ") {
+            if (cell.Char !== " " || !this.SkipEmpty) {
                 this.context.fillStyle = cell.Back.Color;
                 this.context.fillRect(fw * x, fh * y, fw, fh);
                 this.context.fillStyle = cell.Fore.Color;
@@ -141,7 +150,7 @@ export class OmniConsole {
             }
         }, fore, back);
     }
-    public WriteLine(text: string, fore: ConsoleColor | null = null, back: ConsoleColor | null = null): voidr {
+    public WriteLine(text: string, fore: ConsoleColor | null = null, back: ConsoleColor | null = null): void {
         this.colorShift(() => {
             const chars = text.split("");
             chars.forEach(char => {
@@ -190,13 +199,21 @@ export class OmniConsole {
         const chars = (">" + this.readString).split("");
 
         chars.forEach((c, i) => {
+
+            let yOff = Math.round(this.cursor.x + i) / this.width;
+
             this.context.fillStyle = this.Back.Color;
-            this.context.fillRect(fw * (this.cursor.x + i), fh * this.cursor.y, fw, fh);
+            this.context.fillRect(fw * ((this.cursor.x + i) % this.width),
+                fh * (this.cursor.y + yOff), fw, fh);
             this.context.fillStyle = this.Fore.Color;
+
+
+      
+
             this.context.fillText(
                 c,
-                fw * (this.cursor.x+i) + (fw / 4),
-                fh * this.cursor.y + (fh / 1.2),
+                fw * ((this.cursor.x + i) % this.width) + (fw / 4),
+                fh * (this.cursor.y + yOff) + (fh / 1.2),
                 fontSize
             );
             this.context.fillStyle = this.Fore.Color;
@@ -207,12 +224,15 @@ export class OmniConsole {
      
     }
 
+ 
 
+ 
 
     public async ReadLine(): Promise<string> { 
         const promise = new Promise<string>((resolve, reject) => {
             this.DrawRead();
             this.readString = "";
+
             document.onkeyup = n => {
                 if (n.keyCode === 13) { //enter
                     if (this.Echo) {
@@ -220,12 +240,15 @@ export class OmniConsole {
                     }
                     this.SetBackground(NamedColors.Black);
                     this.Draw();
-
-                    resolve(this.readString);
+                    const result = this.readString;
                     this.readString = "";
+                    resolve(result);
+                    document.onkeyup = null;
+              
                 } else
                     if (n.keyCode === 27) { //esc
                         reject();
+                        document.onkeyup = null;
                     } else if (n.keyCode === 8) {
                         this.readString = this.readString.slice(0, -1);
                         this.Draw();

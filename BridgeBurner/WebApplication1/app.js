@@ -12,6 +12,6 @@ export class App {
         oConsole.Echo = true;
         oConsole.EchoFormat = txt => `You typed: ${txt}`;
         let x = await oConsole.ReadLine();
-        oConsole.Draw();
+        // oConsole.Draw();
     }
 }

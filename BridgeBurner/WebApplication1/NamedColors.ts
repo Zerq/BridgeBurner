@@ -1,4 +1,4 @@
-﻿2import { ConsoleColor } from "./ConsoleColor.js";
+﻿import { ConsoleColor } from "./ConsoleColor.js";
 
 export class NamedColors {
     public static AliceBlue = new  ConsoleColor("#F0F8FF");
