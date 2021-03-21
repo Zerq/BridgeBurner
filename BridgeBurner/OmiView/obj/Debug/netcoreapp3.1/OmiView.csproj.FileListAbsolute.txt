@@ -20,4 +20,3 @@ C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\OmiView\obj\Debug\netcoreap
 C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\OmiView\obj\Debug\netcoreapp3.1\OmiView.dll
 C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\OmiView\obj\Debug\netcoreapp3.1\OmiView.pdb
 C:\Users\Zerq\Source\Repos\BridgeBurner\BridgeBurner\OmiView\obj\Debug\netcoreapp3.1\OmiView.genruntimeconfig.cache
-C:\Users\Zerq\source\repos\BridgeBurner\BridgeBurner\OmiView\obj\Debug\netcoreapp3.1\OmiView.csprojAssemblyReference.cache

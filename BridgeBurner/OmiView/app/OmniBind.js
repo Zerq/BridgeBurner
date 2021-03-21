@@ -3,16 +3,13 @@ import { OmniDataBoundElement } from "./OmniDataBoundElement.js";
 export class OmniBind extends OmniDataBoundElement {
     constructor() {
         super();
+        this.template = (content) => `<span class="OmniBind" >${content}</span>`;
         this.shadow = this.attachShadow({ "mode": "open" });
         this.wrapper = document.createElement('span');
-        this.span = this.shadowRoot?.querySelector("span");
-        if (this.span === undefined || this.span === null) {
-            this.span = document.createElement("span");
-        }
-        this.span.className = "Omni-bind";
-        this.shadowRoot?.append(this.span);
+        this.shadow.innerHTML = this.template(this.innerHTML);
+        this.wrapper = this.shadowRoot?.querySelector("span");
     }
     Bind() {
-        this.span.innerText = this.GetData();
+        this.wrapper.innerText = this.GetData();
     }
 }

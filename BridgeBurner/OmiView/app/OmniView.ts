@@ -1,7 +1,11 @@
 ﻿import { OmniDataBoundElement } from "./OmniDataBoundElement.js";
 import { OmniElement } from "./OmniElement.js";
-
+ 
 export class OmniView extends HTMLElement  {
+
+    private template = (content: string) => `<div class="OmniView">${content}</div>`;
+
+
     private shadow: ShadowRoot;
     private wrapper: HTMLDivElement;
 
@@ -20,23 +24,19 @@ export class OmniView extends HTMLElement  {
     constructor() {
         super();
         this.shadow = this.attachShadow({ "mode": "open" });
-        this.wrapper = document.createElement('div');
-        this.wrapper.className = "Omni-view";
-        this.shadow.appendChild(this.wrapper);
-        this.appendChild(this.wrapper)
-     
-
-    }
+        this.shadow.innerHTML = this.template(this.innerHTML);
+        this.wrapper = this.shadowRoot?.querySelector("div") as HTMLDivElement;
+    }    
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         const nodes = this.shadow.host.querySelectorAll("*");
         nodes.forEach(n => {
             if (n instanceof (OmniDataBoundElement)) {
 
-                this.wrapper.appendChild(n);
+               // this.wrapper.appendChild(n);
                 n.Bind();
             }
             else {
-                this.wrapper.appendChild(n);
+                //this.wrapper.appendChild(n);
             }
         });
     }

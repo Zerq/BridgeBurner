@@ -9,13 +9,11 @@ export class OmniElement extends HTMLElement {
         if (this && this.parentElement?.tagName.toLocaleLowerCase() === "o-view") {
             return this.parentElement;
         }
-        const shadowHost = this.parentElement?.parentNode?.host;
-        if (shadowHost.tagName.toLocaleLowerCase() === "o-view") {
-            return shadowHost;
+        const result = this.tunnelOneStepForParentView(this);
+        if (result !== undefined && result !== null) {
+            return result;
         }
-        else {
-            throw new Error(`Orphaned Tag "${this.tagName} is this ieven possible?"`);
-        }
+        return null;
     }
     tunnelOneStepForParentView(element) {
         if (element === null || element === undefined) {
@@ -25,7 +23,18 @@ export class OmniElement extends HTMLElement {
             return element;
         }
         else {
-            return this.tunnelOneStepForParentView(element.parentElement);
+            if (!element.parentElement) {
+                const shadowHost = element.parentNode?.host;
+                if (shadowHost.tagName.toLocaleLowerCase() === "o-view") {
+                    return shadowHost;
+                }
+                else {
+                    throw new Error(`Orphaned Tag "${this.tagName} is this ieven possible?"`);
+                }
+            }
+            else {
+                return this.tunnelOneStepForParentView(element.parentElement);
+            }
         }
     }
 }

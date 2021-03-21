@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "J/rJI7b+1B1Qp8JMgEJt42OZTi8jb6SaMIeJ89jsEytbi2UEnc864isUHXly0NzwOWxOHdoxPNcFfhm664u7SA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Zerq\\source\\repos\\BridgeBurner\\BridgeBurner\\WebApplication1\\WebApplication1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Zerq\\.nuget\\packages\\microsoft.typescript.msbuild\\4.2.3\\microsoft.typescript.msbuild.4.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

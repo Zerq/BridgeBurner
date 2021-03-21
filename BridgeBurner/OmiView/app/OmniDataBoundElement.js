@@ -20,20 +20,22 @@ export class OmniDataBoundElement extends OmniElement {
         }
     }
     GetData() {
+        var result;
         if (this.src) {
             //this is a bit limited but at least there is no arbitrary execution
             if (this.ParentView?.model != null) {
                 if (this.src.indexOf('.') === -1) {
-                    return this.ParentView.model[this.src];
+                    result = this.ParentView.model[this.src];
                 }
                 else {
-                    return this.tunnelChain(this.src.split('.'), this.ParentView.model);
+                    result = this.tunnelChain(this.src.split('.'), this.ParentView.model);
                 }
             }
         }
         else {
-            return undefined;
+            result = undefined;
         }
+        return result;
     }
     static get observedAttributes() { return ['src']; }
     attributeChangedCallback(name, oldValue, newValue) {
