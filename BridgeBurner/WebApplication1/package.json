@@ -1,6 +1,7 @@
 {
   "version": "1.0.0",
-  "name": "asp.net",
+  "name": "omniconsole",
+  "author": "Confusiarch",
   "private": true,
   "scripts": {
     "dev": "lite-server"
