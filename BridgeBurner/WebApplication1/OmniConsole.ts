@@ -21,12 +21,15 @@ export class OmniConsole {
     public Echo = false;
     public EchoFormat = (txt: string) => `>${txt}`;
     public SkipEmpty = false;
+    private autoSize = false;
 
-    public constructor(width: number, height: number, hostId: string, autoDraw = false, echo = false) {
+    public constructor(width: number, height: number, hostId: string, autoDraw = false, echo = false, autoSize=false) {
         this.width = width;
         this.height = height;
         this.autoDraw = autoDraw;
         this.Echo = echo;
+        this.autoSize = autoSize;
+
         this.Cells = {};
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
@@ -37,6 +40,11 @@ export class OmniConsole {
 
         this.hostId = hostId;
         const canvas = document.getElementById(hostId) as HTMLCanvasElement;
+
+        if (autoSize) {
+            canvas.width = this.width * this.fw;
+            canvas.height = this.height * this.fh;
+        }
         this.hostWidth = canvas.width;
         this.hostHeight = canvas.height;
 
@@ -47,19 +55,16 @@ export class OmniConsole {
     }
 
     public SetBackground(color: ConsoleColor): void {
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
         this.context.fillStyle = color.Color;
-        this.context.fillRect(0, 0, this.width * fw, this.height * fh);
+        this.context.fillRect(0, 0, this.width * this.fw, this.height * this.fh);
     }
 
+    private fontSize = 50;
+    private get fw() { return this.fontSize * 0.5; }
+    private get fh() { return this.fontSize * 0.5; }
+
+
     public Draw(): void {
-     
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
- 
 
         if (!this.autoDraw) {
             this.context.fillStyle = "black";
@@ -67,18 +72,18 @@ export class OmniConsole {
         }
 
 
-        this.context.font = `${fontSize / 2}px monospace`;
+        this.context.font = `${this.fontSize / 2}px monospace`;
         this.traverse((l, x, y) => {
             const cell = (this.Cells[l] as Cell);
             if (cell.Char !== " " || !this.SkipEmpty) {
                 this.context.fillStyle = cell.Back.Color;
-                this.context.fillRect(fw * x, fh * y, fw, fh);
+                this.context.fillRect(this.fw * x, this.fh * y, this.fw, this.fh);
                 this.context.fillStyle = cell.Fore.Color;
                 this.context.fillText(
                     cell.Char,
-                    fw * x + (fw / 4),
-                    fh * y + (fh / 1.2),
-                    fontSize
+                    this.fw * x + (this.fw / 4),
+                    this.fh * y + (this.fh / 1.2),
+                    this.fontSize
                 );
             }
         });
@@ -192,9 +197,7 @@ export class OmniConsole {
     public DrawRead(): void {
         this.Draw();
 
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
+ 
 
         const chars = (">" + this.readString).split("");
 
@@ -203,8 +206,8 @@ export class OmniConsole {
             let yOff = Math.round(this.cursor.x + i) / this.width;
 
             this.context.fillStyle = this.Back.Color;
-            this.context.fillRect(fw * ((this.cursor.x + i) % this.width),
-                fh * (this.cursor.y + yOff), fw, fh);
+            this.context.fillRect(this.fw * ((this.cursor.x + i) % this.width),
+                this.fh * (this.cursor.y + yOff), this.fw, this.fh);
             this.context.fillStyle = this.Fore.Color;
 
 
@@ -212,9 +215,9 @@ export class OmniConsole {
 
             this.context.fillText(
                 c,
-                fw * ((this.cursor.x + i) % this.width) + (fw / 4),
-                fh * (this.cursor.y + yOff) + (fh / 1.2),
-                fontSize
+                this.fw * ((this.cursor.x + i) % this.width) + (this.fw / 4),
+                this.fh * (this.cursor.y + yOff) + (this.fh / 1.2),
+                this.fontSize
             );
             this.context.fillStyle = this.Fore.Color;
         });
@@ -249,7 +252,11 @@ export class OmniConsole {
                     if (n.keyCode === 27) { //esc
                         reject();
                         document.onkeyup = null;
-                    } else if (n.keyCode === 8) {
+                        this.SetBackground(NamedColors.Black);
+                        document.onkeyup = null;
+                        this.readString = "";
+                        this.Draw();
+                    } else if (n.keyCode === 8) { //backspace
                         this.readString = this.readString.slice(0, -1);
                         this.Draw();
                         this.DrawRead()
@@ -281,7 +288,9 @@ export class OmniConsole {
            this.Cells[loc].Back = NamedColors.Black;
            this.Cells[loc].Fore = NamedColors.White;
         });
-
+        if (this.autoDraw) {
+            this.Draw();
+        }
     }
 
 }

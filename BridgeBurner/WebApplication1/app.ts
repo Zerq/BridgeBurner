@@ -4,7 +4,7 @@ import { OmniConsole } from "./OmniConsole.js";
 
 export class App {
     public static async  Run(): Promise<void> {
-        const oConsole = new OmniConsole(39, 27, "derp", true);
+        const oConsole = new OmniConsole(39, 27, "derp",true,false, true);
         oConsole.SetBackground(NamedColors.Black);
         oConsole.WriteLine("Test 123");
 
@@ -14,7 +14,13 @@ export class App {
         oConsole.Fore = NamedColors.White;
         oConsole.Echo = true;
         oConsole.EchoFormat = txt => `You typed: ${txt}`;
-        let x=  await oConsole.ReadLine();
+        try {
+            let x = await oConsole.ReadLine();
+        } catch (error) {
+        }
+
+        let y = await oConsole.ReadLine();
+        oConsole.Clear();
 
        // oConsole.Draw();
     }

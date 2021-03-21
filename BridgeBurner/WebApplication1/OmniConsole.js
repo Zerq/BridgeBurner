@@ -1,18 +1,21 @@
 import { Cell } from "./Cell.js";
 import { NamedColors } from "./NamedColors.js";
 export class OmniConsole {
-    constructor(width, height, hostId, autoDraw = false, echo = false) {
+    constructor(width, height, hostId, autoDraw = false, echo = false, autoSize = false) {
         this.fore = NamedColors.White;
         this.back = NamedColors.Black;
         this.cursor = { x: 0, y: 0 };
         this.Echo = false;
         this.EchoFormat = (txt) => `>${txt}`;
         this.SkipEmpty = false;
+        this.autoSize = false;
+        this.fontSize = 50;
         this.readString = "";
         this.width = width;
         this.height = height;
         this.autoDraw = autoDraw;
         this.Echo = echo;
+        this.autoSize = autoSize;
         this.Cells = {};
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
@@ -21,33 +24,33 @@ export class OmniConsole {
         }
         this.hostId = hostId;
         const canvas = document.getElementById(hostId);
+        if (autoSize) {
+            canvas.width = this.width * this.fw;
+            canvas.height = this.height * this.fh;
+        }
         this.hostWidth = canvas.width;
         this.hostHeight = canvas.height;
         this.context = canvas.getContext("2d");
     }
     SetBackground(color) {
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
         this.context.fillStyle = color.Color;
-        this.context.fillRect(0, 0, this.width * fw, this.height * fh);
+        this.context.fillRect(0, 0, this.width * this.fw, this.height * this.fh);
     }
+    get fw() { return this.fontSize * 0.5; }
+    get fh() { return this.fontSize * 0.5; }
     Draw() {
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
         if (!this.autoDraw) {
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, this.hostWidth, this.hostHeight);
         }
-        this.context.font = `${fontSize / 2}px monospace`;
+        this.context.font = `${this.fontSize / 2}px monospace`;
         this.traverse((l, x, y) => {
             const cell = this.Cells[l];
             if (cell.Char !== " " || !this.SkipEmpty) {
                 this.context.fillStyle = cell.Back.Color;
-                this.context.fillRect(fw * x, fh * y, fw, fh);
+                this.context.fillRect(this.fw * x, this.fh * y, this.fw, this.fh);
                 this.context.fillStyle = cell.Fore.Color;
-                this.context.fillText(cell.Char, fw * x + (fw / 4), fh * y + (fh / 1.2), fontSize);
+                this.context.fillText(cell.Char, this.fw * x + (this.fw / 4), this.fh * y + (this.fh / 1.2), this.fontSize);
             }
         });
     }
@@ -133,16 +136,13 @@ export class OmniConsole {
     }
     DrawRead() {
         this.Draw();
-        const fontSize = 50;
-        const fw = fontSize * 0.5;
-        const fh = fontSize * 0.5;
         const chars = (">" + this.readString).split("");
         chars.forEach((c, i) => {
             let yOff = Math.round(this.cursor.x + i) / this.width;
             this.context.fillStyle = this.Back.Color;
-            this.context.fillRect(fw * ((this.cursor.x + i) % this.width), fh * (this.cursor.y + yOff), fw, fh);
+            this.context.fillRect(this.fw * ((this.cursor.x + i) % this.width), this.fh * (this.cursor.y + yOff), this.fw, this.fh);
             this.context.fillStyle = this.Fore.Color;
-            this.context.fillText(c, fw * ((this.cursor.x + i) % this.width) + (fw / 4), fh * (this.cursor.y + yOff) + (fh / 1.2), fontSize);
+            this.context.fillText(c, this.fw * ((this.cursor.x + i) % this.width) + (this.fw / 4), this.fh * (this.cursor.y + yOff) + (this.fh / 1.2), this.fontSize);
             this.context.fillStyle = this.Fore.Color;
         });
     }
@@ -165,8 +165,12 @@ export class OmniConsole {
                 else if (n.keyCode === 27) { //esc
                     reject();
                     document.onkeyup = null;
+                    this.SetBackground(NamedColors.Black);
+                    document.onkeyup = null;
+                    this.readString = "";
+                    this.Draw();
                 }
-                else if (n.keyCode === 8) {
+                else if (n.keyCode === 8) { //backspace
                     this.readString = this.readString.slice(0, -1);
                     this.Draw();
                     this.DrawRead();
@@ -194,5 +198,8 @@ export class OmniConsole {
             this.Cells[loc].Back = NamedColors.Black;
             this.Cells[loc].Fore = NamedColors.White;
         });
+        if (this.autoDraw) {
+            this.Draw();
+        }
     }
 }
