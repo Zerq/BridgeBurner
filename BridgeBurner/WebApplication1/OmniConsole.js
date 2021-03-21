@@ -1,7 +1,7 @@
 import { Cell } from "./Cell.js";
 import { NamedColors } from "./NamedColors.js";
 export class OmniConsole {
-    constructor(width, height, hostId, autoDraw = false, echo = false, autoSize = false) {
+    constructor(width, height, hostId, autoDraw = false, echo = false, autoSize = false, fontSize = 50) {
         this.fore = NamedColors.White;
         this.back = NamedColors.Black;
         this.cursor = { x: 0, y: 0 };
@@ -9,13 +9,13 @@ export class OmniConsole {
         this.EchoFormat = (txt) => `>${txt}`;
         this.SkipEmpty = false;
         this.autoSize = false;
-        this.fontSize = 50;
         this.readString = "";
         this.width = width;
         this.height = height;
         this.autoDraw = autoDraw;
         this.Echo = echo;
         this.autoSize = autoSize;
+        this.fontSize = fontSize;
         this.Cells = {};
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
@@ -32,12 +32,12 @@ export class OmniConsole {
         this.hostHeight = canvas.height;
         this.context = canvas.getContext("2d");
     }
+    get fw() { return this.fontSize * 0.5; }
+    get fh() { return this.fontSize * 0.5; }
     SetBackground(color) {
         this.context.fillStyle = color.Color;
         this.context.fillRect(0, 0, this.width * this.fw, this.height * this.fh);
     }
-    get fw() { return this.fontSize * 0.5; }
-    get fh() { return this.fontSize * 0.5; }
     Draw() {
         if (!this.autoDraw) {
             this.context.fillStyle = "black";

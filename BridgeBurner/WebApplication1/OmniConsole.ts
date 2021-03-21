@@ -23,12 +23,18 @@ export class OmniConsole {
     public SkipEmpty = false;
     private autoSize = false;
 
-    public constructor(width: number, height: number, hostId: string, autoDraw = false, echo = false, autoSize=false) {
+    private fontSize: number;
+    private get fw() { return this.fontSize * 0.5; }
+    private get fh() { return this.fontSize * 0.5; }
+
+
+    public constructor(width: number, height: number, hostId: string, autoDraw = false, echo = false, autoSize = false, fontSize = 50,) {
         this.width = width;
         this.height = height;
         this.autoDraw = autoDraw;
         this.Echo = echo;
         this.autoSize = autoSize;
+        this.fontSize = fontSize;
 
         this.Cells = {};
         for (let y = 0; y < height; y++) {
@@ -59,9 +65,6 @@ export class OmniConsole {
         this.context.fillRect(0, 0, this.width * this.fw, this.height * this.fh);
     }
 
-    private fontSize = 50;
-    private get fw() { return this.fontSize * 0.5; }
-    private get fh() { return this.fontSize * 0.5; }
 
 
     public Draw(): void {
