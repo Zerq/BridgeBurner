@@ -57,7 +57,7 @@ export class OmniConsole {
 
 
         this.context = canvas.getContext("2d") as CanvasRenderingContext2D;
-   
+
     }
 
     public SetBackground(color: ConsoleColor): void {
@@ -190,7 +190,7 @@ export class OmniConsole {
         }, fore, back);
     }
 
-    public  Read(): string {
+    public Read(): string {
         return "";
     }
 
@@ -200,7 +200,7 @@ export class OmniConsole {
     public DrawRead(): void {
         this.Draw();
 
- 
+
 
         const chars = (">" + this.readString).split("");
 
@@ -214,7 +214,7 @@ export class OmniConsole {
             this.context.fillStyle = this.Fore.Color;
 
 
-      
+
 
             this.context.fillText(
                 c,
@@ -224,17 +224,17 @@ export class OmniConsole {
             );
             this.context.fillStyle = this.Fore.Color;
         });
- 
-   
-            
-     
+
+
+
+
     }
 
- 
 
- 
 
-    public async ReadLine(): Promise<string> { 
+
+
+    public async ReadLine(): Promise<string> {
         const promise = new Promise<string>((resolve, reject) => {
             this.DrawRead();
             this.readString = "";
@@ -250,7 +250,7 @@ export class OmniConsole {
                     this.readString = "";
                     resolve(result);
                     document.onkeyup = null;
-              
+
                 } else
                     if (n.keyCode === 27) { //esc
                         reject();
@@ -263,10 +263,10 @@ export class OmniConsole {
                         this.readString = this.readString.slice(0, -1);
                         this.Draw();
                         this.DrawRead()
-                    } else {
+                    } else if (n.key.length === 1) {
                         this.readString += n.key;
-                        this.DrawRead()
-                    }
+                        this.DrawRead();
+                    }  
             };
         });
         return promise;
@@ -274,22 +274,22 @@ export class OmniConsole {
 
 
     private traverse(action: (loc: string, x: number, y: number) => void) {
-       for (let y = 0; y < this.height; y++) {
-        for (let x = 0; x < this.width; x++) {
-       
-                action(`${x},${y}`,x, y);
-  
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+
+                action(`${x},${y}`, x, y);
+
+            }
         }
-       }
     }
 
     public Clear(): void {
         this.cursor.x = 0;
         this.cursor.y = 0;
-        this.traverse((loc,x,y) => {
-           this.Cells[loc].Char = " ";
-           this.Cells[loc].Back = NamedColors.Black;
-           this.Cells[loc].Fore = NamedColors.White;
+        this.traverse((loc, x, y) => {
+            this.Cells[loc].Char = " ";
+            this.Cells[loc].Back = NamedColors.Black;
+            this.Cells[loc].Fore = NamedColors.White;
         });
         if (this.autoDraw) {
             this.Draw();

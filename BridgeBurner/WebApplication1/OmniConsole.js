@@ -175,7 +175,7 @@ export class OmniConsole {
                     this.Draw();
                     this.DrawRead();
                 }
-                else {
+                else if (n.key.length === 1) {
                     this.readString += n.key;
                     this.DrawRead();
                 }
